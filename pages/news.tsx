@@ -41,12 +41,6 @@ const News = () => {
       {
         method: 'GET',
         credentials: 'include',
-        // headers: {
-        //   'Content-Type': 'application/json',
-        // },
-        // body: JSON.stringify({
-        //   pageID: router.query.page || 1,
-        // }),
       }
     )
       .then((response) => {
