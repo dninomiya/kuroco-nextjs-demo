@@ -49,8 +49,11 @@ export const AuthProvider: FC<{
     })
       .then((response) => response.json())
       .then((res) => {
-        console.log(res);
-        alert('success');
+        if (res.errors.length) {
+          res.errors.map((error: any) => alert(error.message));
+        } else {
+          router.push('/signin');
+        }
       });
   };
 
@@ -82,9 +85,11 @@ export const AuthProvider: FC<{
       })
       .then((res) => {
         if (res.status !== 0) {
-          alert(res.errors[0].message);
+          res.errors.map((error: any) => alert(error.message));
         } else {
-          router.push('/news');
+          setTimeout(() => {
+            router.push('/news');
+          }, 500);
         }
       });
   };
