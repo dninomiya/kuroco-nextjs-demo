@@ -1,0 +1,103 @@
+import { useRouter } from 'next/router';
+import React, {
+  createContext,
+  FC,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
+
+export type RegistFormData = {
+  name1: string;
+  name2: string;
+  email: string;
+  login_pwd: string;
+};
+
+type ContextTYpe = {
+  isLoggedIn?: boolean;
+  regist: (data: RegistFormData) => void;
+  logout: VoidFunction;
+  login: (email: string, password: string) => void;
+};
+
+const AuthContext = createContext<ContextTYpe>({} as ContextTYpe);
+
+export const AuthProvider: FC<{
+  children: ReactNode;
+}> = ({ children }) => {
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean | undefined>();
+  const router = useRouter();
+
+  const updateLoggedInStatus = () => {
+    fetch(process.env.NEXT_PUBLIC_BASE_URL + '/rcms-api/1/profile', {
+      method: 'GET',
+      credentials: 'include',
+    }).then((response) => {
+      setIsLoggedIn(response.status === 200);
+    });
+  };
+
+  const regist = (data: RegistFormData) => {
+    fetch(process.env.NEXT_PUBLIC_BASE_URL + '/rcms-api/1/member/regist', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data) as string,
+    })
+      .then((response) => response.json())
+      .then((res) => {
+        console.log(res);
+        alert('success');
+      });
+  };
+
+  const logout = () => {
+    fetch(process.env.NEXT_PUBLIC_BASE_URL + '/rcms-api/1/logout', {
+      method: 'POST',
+      credentials: 'include',
+    }).then(() => {
+      updateLoggedInStatus();
+    });
+  };
+
+  const login = (email: string, password: string) => {
+    fetch(process.env.NEXT_PUBLIC_BASE_URL + '/rcms-api/1/login', {
+      method: 'POST',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email,
+        password,
+      }) as string,
+    })
+      .then((response) => {
+        console.log(response);
+        updateLoggedInStatus();
+        return response.json();
+      })
+      .then((res) => {
+        if (res.status !== 0) {
+          alert(res.errors[0].message);
+        } else {
+          router.push('/news');
+        }
+      });
+  };
+
+  useEffect(() => {
+    updateLoggedInStatus();
+  }, []);
+
+  return (
+    <AuthContext.Provider value={{ isLoggedIn, regist, logout, login }}>
+      {children}
+    </AuthContext.Provider>
+  );
+};
+
+export const useAuth = () => useContext(AuthContext);
