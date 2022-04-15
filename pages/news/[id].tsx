@@ -29,7 +29,6 @@ const NewsDetail = () => {
         return response.json();
       })
       .then((data) => {
-        console.log(data?.details);
         setTopic(data?.details || null);
       });
   }, [query]);

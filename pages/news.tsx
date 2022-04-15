@@ -56,7 +56,6 @@ const News = () => {
         if (data.errors.length) {
           return;
         }
-        console.log(data);
         setItems(data.list);
         setPageCount(data.pageInfo.totalPageCnt);
       });

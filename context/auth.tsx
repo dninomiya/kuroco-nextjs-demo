@@ -79,7 +79,6 @@ export const AuthProvider: FC<{
       }) as string,
     })
       .then((response) => {
-        console.log(response);
         updateLoggedInStatus();
         return response.json();
       })

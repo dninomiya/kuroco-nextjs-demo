@@ -142,14 +142,11 @@ const Contact = () => {
         return response.json();
       })
       .then((data) => {
-        console.log(data);
         setForm(data?.details);
       });
   }, [isLoggedIn]);
 
   const submit = (data: FormData) => {
-    console.log(data);
-
     fetch(process.env.NEXT_PUBLIC_BASE_URL + '/rcms-api/1/inquiry/1', {
       method: 'POST',
       credentials: 'include',
@@ -158,12 +155,13 @@ const Contact = () => {
         'Content-Type': 'application/json',
       },
     })
-      .then((response) => {
-        console.log(response);
-        return response.json();
-      })
+      .then((response) => response.json())
       .then((res) => {
-        console.log(res);
+        if (res.errors.length) {
+          res.errors.map((e: any) => alert(e.message));
+        } else {
+          alert('success');
+        }
       });
   };
 
