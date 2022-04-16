@@ -13,8 +13,6 @@ const Preview = () => {
       return;
     }
 
-    console.log(token);
-
     fetch(
       process.env.NEXT_PUBLIC_BASE_URL +
         '/rcms-api/1/topics_detail/preview?preview_token=' +
