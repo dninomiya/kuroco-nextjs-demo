@@ -31,7 +31,7 @@ export const AuthProvider: FC<{
   const router = useRouter();
 
   const updateLoggedInStatus = () => {
-    fetch(process.env.NEXT_PUBLIC_BASE_URL + '/rcms-api/1/profile/', {
+    fetch(process.env.NEXT_PUBLIC_BASE_URL + '/rcms-api/1/profile', {
       method: 'GET',
       credentials: 'include',
     }).then((response) => {
@@ -40,7 +40,7 @@ export const AuthProvider: FC<{
   };
 
   const regist = (data: RegistFormData) => {
-    fetch(process.env.NEXT_PUBLIC_BASE_URL + '/rcms-api/1/member/regist/', {
+    fetch(process.env.NEXT_PUBLIC_BASE_URL + '/rcms-api/1/member/regist', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -58,7 +58,7 @@ export const AuthProvider: FC<{
   };
 
   const logout = () => {
-    fetch(process.env.NEXT_PUBLIC_BASE_URL + '/rcms-api/1/logout/', {
+    fetch(process.env.NEXT_PUBLIC_BASE_URL + '/rcms-api/1/logout', {
       method: 'POST',
       credentials: 'include',
     }).then(() => {
@@ -67,7 +67,7 @@ export const AuthProvider: FC<{
   };
 
   const login = (email: string, password: string) => {
-    fetch(process.env.NEXT_PUBLIC_BASE_URL + '/rcms-api/1/login/', {
+    fetch(process.env.NEXT_PUBLIC_BASE_URL + '/rcms-api/1/login', {
       method: 'POST',
       credentials: 'include',
       headers: {
