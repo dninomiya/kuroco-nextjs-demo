@@ -7,6 +7,10 @@ on:
     types: [created, edited]
   workflow_dispatch:
     branches: [ main ]
+
+env:
+  NEXT_PUBLIC_BASE_URL: ${{secrets.NEXT_PUBLIC_BASE_URL}}
+
 jobs:
   # for Pull Request (exclude merged)
   pullreq_build:
