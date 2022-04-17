@@ -134,7 +134,7 @@ const Contact = () => {
       return;
     }
 
-    fetch(process.env.NEXT_PUBLIC_BASE_URL + '/rcms-api/1/inquiry/get/1', {
+    fetch(process.env.NEXT_PUBLIC_BASE_URL + '/rcms-api/1/inquiry/get/1/', {
       method: 'GET',
       credentials: 'include',
     })
@@ -147,7 +147,7 @@ const Contact = () => {
   }, [isLoggedIn]);
 
   const submit = (data: FormData) => {
-    fetch(process.env.NEXT_PUBLIC_BASE_URL + '/rcms-api/1/inquiry/1', {
+    fetch(process.env.NEXT_PUBLIC_BASE_URL + '/rcms-api/1/inquiry/1/', {
       method: 'POST',
       credentials: 'include',
       body: JSON.stringify(data),
